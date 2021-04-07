@@ -1,4 +1,4 @@
-# fs_pos
+# flutter_fs
 
 A new Flutter project.
 
