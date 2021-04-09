@@ -1,66 +1,88 @@
 import 'package:flutter/material.dart';
+import 'package:fs_pos/exceptions.dart';
+import 'package:fs_pos/services/bill_service.dart';
+import 'package:fs_pos/services/customer_service.dart';
+import 'package:fs_pos/services/login_service.dart';
+import 'package:fs_pos/services/signup_service.dart';
+import 'package:fs_pos/services/store_services.dart';
 
 void main() {
-  runApp(MyApp());
+  return runApp(
+    MaterialApp(
+      home: Scaffold(
+        backgroundColor: Colors.red,
+        appBar: AppBar(
+          title: Text('Dicee'),
+          backgroundColor: Colors.red,
+        ),
+        body: MyApp(),
+      ),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+    return Center(
+      child: MaterialButton(
+        onPressed: () async {
+          print("onpress");
+          await test();
+        },
+        color: Colors.blueAccent,
+        child: Text("Enter"),
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+Future test() async {
+  try {
+    // print(await LoginService.login(
+    //     username: "prakashguna1qqq0@gmail.com", password: "12345"));
 
-  final String title;
+    // print(await SignUpService.signup(
+    //     email: "prakashguna1qqq0@gmail.com",
+    //     password: "12345",
+    //     firstName: "11111",
+    //     lastName: "00000",
+    //     image: "pppp"));
 
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
+    // print(await LoginService.forgotPassword(email: "prakashguna10@gmail.com"));
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+    // print(await LoginService.changePassword(
+    //     email: "prakashguna10@gmail.com", otp: "8630", newPassword: "12345"));
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+    // print(await BillService.billListByUser());
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
-    );
+    // print(await BillService.billListByDate(
+    //     fromDate: '2020-04-10', toDate: '2021-04-10'));
+
+    // print(await BillService.billListByStore());
+
+    // print(await StoreService.getStore());
+
+    // print(await CustomerService.getCustomer());
+
+    // print(await BillService.getSingleBill());
+
+    // print(await CustomerService.editCustomer(
+    //     firstName: "Prakash", lastName: "Gunasekaran", image: "mypic.jpg"));
+
+    // print(await CustomerService.deleteCustomer());
+
+    // print(await BillService.latestBillList(transid: '200'));
+  } on NotAuthorizedException catch (e) {
+    print(e);
+    print("NotAuthorizedException");
+  } on NotFoundException catch (e) {
+    print(e);
+    print("NotFoundException");
+  } on DataConflictException {
+    print("DataConflictException");
+  } catch (e) {
+    print(e);
+    print("Exception");
   }
 }
